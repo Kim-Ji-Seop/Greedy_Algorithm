@@ -1,78 +1,21 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#define THREE 3
-#define FIVE 5
-// 1. 3의 배수 5의 배수 -> 단일숫자 처리
-// 2. 3으로 나눈 나머지 -> 2일경우 한번을 덜 나누고 5로 채우면 됨
-// 3. 5로 나눈 나머지 -> 1일 경우 한번을 덜 나누고 3을 두번채우면 됨
-// 4. 5로 나누다가 나머지가 3이 나올경우 or 3으로 나누다가 나머지가 2가 나올경우
-int sugar(int number)
-{
-    int tmp;
-    if (number % FIVE == 4 && number > 5)
-    {
-        tmp = (number % FIVE) + FIVE;
-        if (tmp % THREE == 0)
-        {
-            return (number / FIVE) - 1 + (tmp / THREE);
-        }
-        else
-        {
-            return -1;
+int sugar(int number) {
+    if(number < 3){ // 3보다 작으면 -1
+        return -1;
+    }
+    if(number % 5 == 0){
+        return number / 5;
+    }else{// 싹다 5로 나눠주긴 하는데 나눠 떨어지지 않는 숫자들.
+        if(number % 5 == 3){// 3일 경우..
+            return number/5 + 1;// 그대로 1 더해주면 그만
+        }else if(number % 5 == 1 || number % 5 == 4){// 1이나 4일 경우 -> 나머지에 5를 더하면 3의 배수가 됨.  
+            if(number == 4) return -1; //4일때 -1리턴
+            else return (number/5 - 1) + ((number%5 + 5) / 3);  //--> 5를 더한 숫자에 3으로 나눈 몫을 + 해서 리턴
+        }else{
+            if(number == 7) return -1;// 7일경우 -1 리턴
+            else return (number/5 - 2) + ((number%5 + 10) / 3); // --> 10을 더한 후 3으로 나눈 몫을 + 해서 리턴
         }
     }
-    else if (number % FIVE == 3 && number > 5)
-    {
-        tmp = (number % FIVE);
-        if (tmp % THREE == 0)
-        {
-            return (number / FIVE) + (tmp / THREE);
-        }
-        else
-        {
-            return -1;
-        }
-    }
-    else if (number % FIVE == 2 && number > 10)
-    {
-        tmp = (number % FIVE) + FIVE * 2;
-        if (tmp % THREE == 0)
-        {
-            return (number / FIVE) - 2 + (tmp / THREE);
-        }
-        else
-        {
-            return -1;
-        }
-    }
-    else if (number % FIVE == 1 && number > 5)
-    {
-        tmp = (number % FIVE) + FIVE;
-        if (tmp % THREE == 0)
-        {
-            return (number / FIVE) - 1 + (tmp / THREE);
-        }
-        else
-        {
-            return -1;
-        }
-    }
-    else if (number % FIVE == 0 && number >= 5)
-    {
-        return (number / FIVE);
-    }
-    else if (number < 5)
-    {
-        if (number % THREE != 0)
-        {
-            return -1;
-        }
-        else
-        {
-            return (number / THREE);
-        }
-    }
-    return -1;
 }
 int main()
 {
